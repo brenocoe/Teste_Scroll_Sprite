@@ -1,0 +1,51 @@
+
+
+site usado para escolher fontes TTF
+
+https://www.dafont.com/pt/oceanic-drift.font
+
+
+
+
+
+
+
+site usado para converter a imagem em arquivo .c
+
+https://notisrac.github.io/FileToCArray/
+
+        Code format     Hex 0x00
+        Pallete Mode    24bit RGB 3bits per pixel
+        Multi Line      Checked
+        Endianness      Little-Endian
+        const           Checked
+        unsigned        Checked
+        Data Type       Short
+        PROGMEM         Checked
+
+
+
+
+
+
+
+
+
+
+http://www.rinkydinkelectronics.com/t_imageconverter565.php
+
+
+
+image2cpp
+
+image2cpp is a simple tool to change images into byte arrays 
+(or arrays back into an images) for use with (monochrome) 
+displays such as OLEDs on your Arduino or Raspberry Pi.
+It was originally made to work with the Adafruit OLED library 
+(for which your can find an example sketch for Arduino here) 
+but has been expanded by the community to be useful in all 
+kind of (embedded) projects.
+
+https://javl.github.io/image2cpp/
+
+=================================

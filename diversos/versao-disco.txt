@@ -1,0 +1,81 @@
+#include <Arduino.h>
+#include <TFT_eSPI.h>
+#include "roda_num.h"
+// #include "fita_num_p1.h" // 86 x 452
+// #include "fita_num_p2.h" // 86 x 452
+
+TFT_eSPI tft = TFT_eSPI();
+TFT_eSprite painelD1 = TFT_eSprite(&tft);
+TFT_eSprite disco1 = TFT_eSprite(&tft);
+TFT_eSprite painelD2 = TFT_eSprite(&tft);
+TFT_eSprite disco2 = TFT_eSprite(&tft);
+TFT_eSprite painelD3 = TFT_eSprite(&tft);
+TFT_eSprite disco3 = TFT_eSprite(&tft);
+
+void setup()
+{
+  //
+  tft.init();
+  tft.setRotation(1);
+  tft.setSwapBytes(true);
+  tft.fillScreen(TFT_BLUE);
+  //
+  painelD1.createSprite(100, 90);
+  painelD1.setSwapBytes(true);
+  painelD1.setPivot(-105, 42);
+  disco1.createSprite(400, 400);
+  disco1.setSwapBytes(true);
+  //
+  painelD2.createSprite(100, 90);
+  painelD2.setSwapBytes(true);
+  painelD2.setPivot(-105, 42);
+  disco2.createSprite(400, 400);
+  disco2.setSwapBytes(true);
+  //
+  painelD3.createSprite(85, 100);
+  painelD3.setSwapBytes(true);
+  painelD3.setPivot(-115, 90); // para dig 0 esses valores sao usados -115, 90
+  disco3.createSprite(400, 400);
+  disco3.setSwapBytes(true);
+}
+
+int passo = 1;
+int poszero = 0; // -72; // -36 para dig 1 // 0 para dig 0
+int angle1 = poszero;
+int angle2 = poszero;
+int angle3 = poszero;
+
+void loop()
+{
+  //
+  angle3 = angle3 + passo;
+  if (angle3 >= 360)
+  {
+    angle3 = poszero;
+    angle2 = angle2 + passo;
+  }
+  if (angle2 >= 360)
+  {
+    angle2 = poszero;
+    angle1 = angle1 + passo;
+  }
+  if (angle1 >= 360)
+  {
+    angle1 = poszero;
+  }
+  //
+  // painelD1.fillScreen(TFT_WHITE);
+  // disco1.pushImage(0, 0, 400, 400, roda_num);
+  // disco1.pushRotated(&painelD1, angle1, TFT_WHITE);
+  // painelD1.pushSprite(5, 40);
+  //
+  // painelD2.fillScreen(TFT_WHITE);
+  // disco2.pushImage(0, 0, 400, 400, roda_num);
+  // disco2.pushRotated(&painelD2, angle2, TFT_WHITE);
+  // painelD2.pushSprite(110, 40);
+  //
+  painelD3.fillScreen(TFT_WHITE);
+  disco3.pushImage(0, 0, 400, 400, roda_num);
+  disco3.pushRotated(&painelD3, angle3, TFT_WHITE);
+  painelD3.pushSprite(215, 40);
+}

@@ -1,0 +1,101 @@
+#include <Arduino.h>
+#include <TFT_eSPI.h>
+#include "fita_num_p1.h" // 86 x 452
+#include "fita_num_p2.h" // 86 x 452
+
+TFT_eSPI tft = TFT_eSPI();
+TFT_eSprite painel1 = TFT_eSprite(&tft);
+TFT_eSprite fita1 = TFT_eSprite(&tft);
+
+int sentido = 0;
+int alt_num = 116;
+int esp_num = 44;
+int qtde_num = 5;
+int topo_num;
+int offset_num;
+int offset_last;
+int posy;
+
+// int sentido = 1;
+// int alt_num = 116;
+// int esp_num = 44;
+// int qtde_num = 5;
+// int topo_num = 0 - ((alt_num + esp_num) * qtde_num);
+// int offset_num = alt_num + esp_num;
+// int offset_last = 0 - offset_num;
+// int posy = topo_num;
+
+void init_var()
+{
+  //
+  if (sentido == 0)
+  {
+    topo_num = 0;
+    offset_num = topo_num - ((alt_num + esp_num) * qtde_num);
+    offset_last = topo_num - ((alt_num + esp_num) * (qtde_num - 1));
+    posy = topo_num;
+  }
+  else
+  {
+    topo_num = 0 - ((alt_num + esp_num) * qtde_num);
+    offset_num = alt_num + esp_num;
+    offset_last = 0 - offset_num;
+    posy = topo_num;
+  }
+}
+
+void setup()
+{
+  //
+  init_var();
+  //
+  tft.init();
+  tft.setRotation(1);
+  tft.setSwapBytes(true);
+  tft.fillScreen(TFT_BLUE);
+  //
+  painel1.createSprite(125, 116);
+  painel1.setSwapBytes(true);
+}
+
+void loop()
+{
+
+  //
+  painel1.fillScreen(TFT_WHITE);
+
+  //
+  if (sentido == 0)
+  {
+    posy--;
+    if (posy <= offset_num)
+    {
+      posy = topo_num;
+      // sentido = 1;
+      // init_var();
+    }
+    if (posy <= offset_last)
+    {
+      painel1.pushImage(0, posy + ((alt_num + esp_num) * qtde_num), 125, 799, fita_num_p1);
+    }
+    painel1.pushImage(0, posy, 125, 799, fita_num_p1);
+  }
+  else
+  {
+    posy++;
+    if (posy >= offset_num)
+    {
+      posy = topo_num + alt_num + esp_num;
+      // sentido = 0;
+      // init_var();
+    }
+    if (posy >= offset_last)
+    {
+      painel1.pushImage(0, posy - ((alt_num + esp_num) * qtde_num), 125, 799, fita_num_p1);
+    }
+    painel1.pushImage(0, posy, 125, 799, fita_num_p1);
+  }
+
+  //
+  painel1.pushSprite(5, 27);
+}
